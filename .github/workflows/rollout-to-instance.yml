@@ -1,18 +1,17 @@
 ---
 name: Rollout to Instances
-run-name: Rollout of ${{ env.release_tag }} to ${{ inputs.target_instances }}
+run-name: Rollout of ${{ inputs.release_tag }} to ${{ inputs.target_instances }}
 
 on:
-  push:
   workflow_dispatch:
     inputs:
+      release_tag:
+        description: "Set Tag of which Release to rollout"
+        required: true
       target_instances:
         description: "Decide where to do the rollout. Choose a Stage, a single instance or everywhere with 'all'. Default: all"
         required: true
         default: all
-
-env: 
-  release_tag: 8.8.12
 
 jobs:
   # approve_staging:
@@ -32,7 +31,7 @@ jobs:
       instance_name: spsh-staging-schulportal
       instance_stage: staging
       frontend_hostname: "spsh.staging.spsh.dbildungsplattform.de"
-      release_tag: ${{ env.release_tag }}
+      release_tag: ${{ inputs.release_tag }}
     secrets:
       token: ${{ secrets.GITHUB_TOKEN }}
       KUBECONFIG: ${{ secrets.SPSH_STAGING_KUBECONFIG }}
@@ -41,7 +40,7 @@ jobs:
   # approve_prod:
   #   needs:
   #     - spsh-staging-schulportal
-  #   environment: approve_prod
+  # environment: approve_prod
   #   runs-on: ubuntu-latest
   #   steps:
   #     - run: echo "Version ${{ github.event.inputs.release_tag }}"
@@ -57,7 +56,7 @@ jobs:
   #       instance_name: spsh-prod-schulportal
   #       instance_stage: prod
   #       frontend_hostname: "spsh.prod.spsh.dbildungsplattform.de"
-  #       release_tag: ${{ env.release_tag }}
+  #       release_tag: ${ inputs.release_tag }}
   #     secrets:
   #       token: ${{ secrets.GITHUB_TOKEN }}
   #       KUBECONFIG: ${{ secrets.SPSH_PROD_KUBECONFIG }}
