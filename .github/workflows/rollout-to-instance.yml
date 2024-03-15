@@ -3,7 +3,7 @@ name: Rollout to Instances
 run-name: Rollout of ${{ env.release_tag }} to ${{ inputs.target_instances }}
 
 on:
-  push
+  push:
   workflow_dispatch:
     inputs:
       target_instances:
