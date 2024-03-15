@@ -55,6 +55,15 @@ jobs:
         run: |
           helm repo add dbildungsplattform https://dbildungsplattform.github.io/helm-charts-registry/
 
+      - name: Rollout spsh-init Helm Chart 
+        run: |
+            helm upgrade --install \
+            spsh-init \
+            ./charts/spsh-init \
+            --namespace spsh \
+            --kubeconfig /home/runner/.kube/config \
+            --values ./config/helm-charts/${{ inputs.instance_stage }}/general/values.yml \
+
       - name: Rollout dbildungs-iam-keycloak Helm Chart 
         run: |
             helm upgrade --install \
