@@ -3,4 +3,5 @@ auth:
 database:
   name: dbildungs_iam_server
 seeding:
-  enabled: false
+  enabled: true
+backendHostname: spsh.staging.spsh.dbildungsplattform.de
