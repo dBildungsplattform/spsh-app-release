@@ -1,0 +1,3 @@
+vault: spsh-prod-schulportal
+keycloakHostname: keycloak.spsh.dbildungsplattform.de 
+frontendHostname: spsh.dbildungsplattform.de 

@@ -1,0 +1,3 @@
+vault: spsh-staging-schulportal
+keycloakHostname: keycloak.staging.spsh.dbildungsplattform.de
+frontendHostname: spsh.staging.spsh.dbildungsplattform.de
