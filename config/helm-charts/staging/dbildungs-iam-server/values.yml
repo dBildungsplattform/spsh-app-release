@@ -2,6 +2,7 @@ auth:
   existingSecret: dbildungs-iam-server
 database:
   name: dbildungs_iam_server
+  username: dbildungs_iam_server
 seeding:
   enabled: true
 backendHostname: spsh.staging.spsh.dbildungsplattform.de
