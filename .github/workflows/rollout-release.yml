@@ -74,6 +74,7 @@ jobs:
 
       - name: Rollout dbildungs-iam-keycloak Helm Chart 
         run: |
+            ls
             # yq eval-all 'select(fileIndex == 0) * select(fileIndex == 1) * select(fileIndex == 2)' values.yaml ./config/helm-charts/${{ inputs.instance_stage }}/general/values.yml ./config/helm-charts/${{ inputs.instance_stage }}/dbildungs-iam-keycloak/values.yml > merged-values.yaml
             yq eval-all 'select(fileIndex == 0) * select(fileIndex == 1)' ./config/helm-charts/${{ inputs.instance_stage }}/general/values.yml ./config/helm-charts/${{ inputs.instance_stage }}/dbildungs-iam-keycloak/values.yml > merged-values.yaml
             helm upgrade --install \
