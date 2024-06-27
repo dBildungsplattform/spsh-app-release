@@ -1,0 +1,28 @@
+# persistence 
+
+persistence:
+  enabled: true
+  accessModes:
+    - ReadWriteOnce
+  size: 8Gi
+  storageClass: ""
+
+
+service:
+  enableLdapPort: true
+  enableSslLdapPort: true
+  sessionAffinity: None
+  type: LoadBalancer
+  # if enabled you need to have to set the LOADBALANCER_SOURCERANGES key with value in the existingSecret
+  externalIp: true
+  # servicecenter für den prometheus blackbox exporter freischalten
+  # SourceRangesRestriction: true
+  SourceRangesRestriction: false
+  # enableLdapPort: false
+
+
+# env:
+#   LDAP_ULIMIT_NOFILES: "4096"
+
+phpldapadmin:
+  enabled: false
