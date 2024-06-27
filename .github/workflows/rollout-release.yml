@@ -41,7 +41,7 @@ jobs:
           repository: 'dBildungsplattform/spsh-app-release'
           # change this ref to a branch to test changes
           # ref: "${{ inputs.release_tag }}"
-          ref: "DBP-799-open…e-helm-chart"
+          ref: "DBP-799-openldap-image-helm-chart"
 
       - name: Install kubectl and Helm
         uses: azure/setup-kubectl@3e0aec4d80787158d308d7b364cb1b702e7feb7f #v4.0.0
@@ -121,7 +121,7 @@ jobs:
 
       - name: Send Notification to Rocket Chat
         uses: RocketChat/Rocket.Chat.GitHub.Action.Notification@1.1.1
-        if: always()
+        # if: always()
         with:
           type: ${{ job.status }}
           job_name: 'Rollout of ${{ inputs.instance_name }} triggered by ${{ github.actor }}:'
