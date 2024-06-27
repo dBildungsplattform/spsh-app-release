@@ -52,6 +52,12 @@ jobs:
           echo "${{ secrets.KUBECONFIG }}" > /home/runner/.kube/config
           chmod 600 /home/runner/.kube/config
 
+      - name: Install yq
+        run: |
+          pip3 install yq
+          # should test wh
+
+
       - name: Helm add repo dbilungsplattform
         run: |
           helm repo add dbildungsplattform https://dbildungsplattform.github.io/helm-charts-registry/
@@ -68,27 +74,28 @@ jobs:
 
       - name: Rollout dbildungs-iam-keycloak Helm Chart 
         run: |
+            yq eval-all 'select(fileIndex == 0) * select(fileIndex == 1) * select(fileIndex == 2)' values.yaml ./config/helm-charts/${{ inputs.instance_stage }}/general/values.yml ./config/helm-charts/${{ inputs.instance_stage }}/dbildungs-iam-keycloak/values.yml > merged-values.yaml
             helm upgrade --install \
             dbildungs-iam-keycloak \
             dbildungsplattform/dbildungs-iam-keycloak \
             --namespace spsh \
             --kubeconfig /home/runner/.kube/config \
             --version ${{ inputs.release_tag }} \
-            --values ./config/helm-charts/${{ inputs.instance_stage }}/general/values.yml \
-            --values ./config/helm-charts/${{ inputs.instance_stage }}/dbildungs-iam-keycloak/values.yml \
-            --wait
+            --values merged-values.yaml \
+            --wait 
 
-      - name: Deploy dbildungs_iam_ldap Helm chart
-        run: |
-          helm upgrade --install \
-            dbildungs-iam-ldap \
-            dbildungsplattform/dbildungs-iam-ldap \
-            --namespace spsh \
-            --values ./config/helm-charts/${{ inputs.instance_stage }}/general/values.yml \
-            --values ./config/helm-charts/${{ inputs.instance_stage }}/dbildungs-iam-ldap/values.yml \
-            --set global.existingSecret="dbildungs-iam-ldap" \
-            --set initTLSSecret.secret="dbildungs-iam-ldap-tls" \
-            --wait
+      # install den Rest
+      # - name: Deploy dbildungs_iam_ldap Helm chart
+      #   run: |
+      #     helm upgrade --install \
+      #       dbildungs-iam-ldap \
+      #       dbildungsplattform/dbildungs-iam-ldap \
+      #       --namespace spsh \
+      #       --values ./config/helm-charts/${{ inputs.instance_stage }}/general/values.yml \
+      #       --values ./config/helm-charts/${{ inputs.instance_stage }}/dbildungs-iam-ldap/values.yml \
+      #       --set global.existingSecret="dbildungs-iam-ldap" \
+      #       --set initTLSSecret.secret="dbildungs-iam-ldap-tls" \
+      #       --wait
         
         # --set global.existingSecret="dbildungs-iam-ldap" \
         # --set initTLSSecret.secret="dbildungs-iam-ldap-tls" \
