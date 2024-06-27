@@ -15,6 +15,7 @@ on:
 
 jobs:
   approve_infra:
+    if:  inputs.target_instances == 'spshinfra-dev-schulportal-01' || inputs.target_instances == 'infra' || inputs.target_instances == 'all'
     environment: approve_infra
     runs-on: ubuntu-latest
     steps:
@@ -39,6 +40,7 @@ jobs:
 
   approve_staging:
     environment: approve_staging
+    if:  inputs.target_instances == 'spsh-staging-schulportal' || inputs.target_instances == 'staging' || inputs.target_instances == 'all'
     runs-on: ubuntu-latest
     steps:
       - run: echo "Version of release tag ${{ github.event.inputs.release_tag }}"
@@ -63,7 +65,8 @@ jobs:
   # approve_prod:
   #   needs:
   #     - spsh-staging-schulportal
-  # environment: approve_prod
+  #   if:  inputs.target_instances == 'spsh-prod-schulportal' || inputs.target_instances == 'prod' || inputs.target_instances == 'all'
+  #   environment: approve_prod
   #   runs-on: ubuntu-latest
   #   steps:
   #     - run: echo "Version ${{ github.event.inputs.release_tag }}"
