@@ -24,8 +24,8 @@ jobs:
       - run: echo "Workflow is triggered by ${{ github.ref_type }} ${{ github.ref_name }}"
 
   spsh-infra-schulportal:
-    # needs:
-      # - approve_infra
+    needs:
+      - approve_infra
     if:  inputs.target_instances == 'spshinfra-dev-schulportal-01' || inputs.target_instances == 'infra' || inputs.target_instances == 'all'
     uses: ./.github/workflows/rollout-release.yml
     with:

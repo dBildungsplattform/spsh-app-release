@@ -4,25 +4,15 @@ global:
 # The pvc should get created beforehand
 persistence:
   enabled: true
-  accessModes:
-    - ReadWriteOnce
-  size: 8Gi
-  storageClass: ""
 
 service:
-  enableLdapPort: true
-  enableSslLdapPort: true
-  sessionAffinity: None
   type: LoadBalancer
   externalIp: true
   # if enabled you need to have to set the LOADBALANCER_SOURCERANGES key with value in the existingSecret
   # later add the servicecenter ips so the prometheus blackbox exporter has access
   # SourceRangesRestriction: true
   SourceRangesRestriction: false
-  # enableLdapPort: false
 
-
-# test if this overwrites other important stuff
 existingSecret: 
   name: dbildungs-iam-ldap
 
