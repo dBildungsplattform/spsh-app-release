@@ -1,5 +1,7 @@
-# persistence 
+global:
+  existingSecret: "dbildungs-iam-ldap"
 
+# The pvc should get created beforehand
 persistence:
   enabled: true
   accessModes:
@@ -7,22 +9,22 @@ persistence:
   size: 8Gi
   storageClass: ""
 
-
 service:
   enableLdapPort: true
   enableSslLdapPort: true
   sessionAffinity: None
   type: LoadBalancer
-  # if enabled you need to have to set the LOADBALANCER_SOURCERANGES key with value in the existingSecret
   externalIp: true
-  # servicecenter für den prometheus blackbox exporter freischalten
-  SourceRangesRestriction: true
+  # if enabled you need to have to set the LOADBALANCER_SOURCERANGES key with value in the existingSecret
+  # later add the servicecenter ips so the prometheus blackbox exporter has access
+  # SourceRangesRestriction: true
+  SourceRangesRestriction: false
   # enableLdapPort: false
 
 
-env:
-  LDAP_ULIMIT_NOFILES: "4096"
+# test if this overwrites other important stuff
+existingSecret: 
+  name: dbildungs-iam-ldap
 
-phpldapadmin:
-  enabled: false
-
+initTLSSecret:
+  secret: "dbildungs-iam-ldap-tls" 
