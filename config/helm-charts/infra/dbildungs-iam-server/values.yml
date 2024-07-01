@@ -1,0 +1,6 @@
+auth: 
+  existingSecret: dbildungs-iam-server
+database:
+  name: dbildungs_iam_server
+  username: dbildungs_iam_server
+backendHostname: spsh.spshinfra.spsh.dbildungsplattform.de

@@ -1,0 +1,3 @@
+vault: spshinfra-dev-schulportal
+keycloakHostname: keycloak.spshinfra.spsh.dbildungsplattform.de 
+frontendHostname: spsh.spshinfra.spsh.dbildungsplattform.de 
