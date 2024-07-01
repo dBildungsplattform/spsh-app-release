@@ -83,11 +83,11 @@ jobs:
             dbildungsplattform/dbildungs-iam-ldap \
             --namespace spsh \
             --kubeconfig /home/runner/.kube/config \
-            --version ${{ inputs.release_tag }} \ 
             --values ./config/helm-charts/${{ inputs.instance_stage }}/general/values.yml \
             --values ./config/helm-charts/${{ inputs.instance_stage }}/dbildungs-iam-ldap/values.yml \
             --wait
 
+        # --version ${{ inputs.release_tag }} \ 
 
       - name: Rollout schulportal-client Helm Chart 
         run: |
