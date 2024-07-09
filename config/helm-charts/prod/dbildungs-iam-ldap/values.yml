@@ -1,7 +1,6 @@
 global:
   existingSecret: "dbildungs-iam-ldap"
 
-# The pvc should get created beforehand
 persistence:
   enabled: true
   size: 8Gi
@@ -19,4 +18,5 @@ existingSecret:
   name: dbildungs-iam-ldap
 
 initTLSSecret:
+  tls_enabled: true
   secret: "dbildungs-iam-ldap-tls" 
