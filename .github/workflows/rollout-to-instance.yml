@@ -14,8 +14,33 @@ on:
         default: all
 
 jobs:
+  approve_infra:
+    if:  inputs.target_instances == 'spshinfra-dev-schulportal-01' || inputs.target_instances == 'infra' || inputs.target_instances == 'all'
+    environment: approve_infra
+    runs-on: ubuntu-latest
+    steps:
+      - run: echo "Version of release tag ${{ github.event.inputs.release_tag }}"
+      - run: echo "Target(s) to rollout to ${{ github.event.inputs.target_instances }}"
+      - run: echo "Workflow is triggered by ${{ github.ref_type }} ${{ github.ref_name }}"
+
+  spsh-infra-schulportal:
+    needs:
+      - approve_infra
+    if:  inputs.target_instances == 'spshinfra-dev-schulportal-01' || inputs.target_instances == 'infra' || inputs.target_instances == 'all'
+    uses: ./.github/workflows/rollout-release.yml
+    with:
+      instance_name: spshinfra-dev-schulportal-01
+      instance_stage: infra
+      frontend_hostname: "spsh.spshinfra.spsh.dbildungsplattform.de"
+      release_tag: ${{ inputs.release_tag }}
+    secrets:
+      token: ${{ secrets.GITHUB_TOKEN }}
+      KUBECONFIG: ${{ secrets.SPSH_INFRA_KUBECONFIG }}
+      RC_WEBHOOK:  ${{ secrets.RC_WEBHOOK }}
+
   approve_staging:
     environment: approve_staging
+    if:  inputs.target_instances == 'spsh-staging-schulportal' || inputs.target_instances == 'staging' || inputs.target_instances == 'all'
     runs-on: ubuntu-latest
     steps:
       - run: echo "Version of release tag ${{ github.event.inputs.release_tag }}"
@@ -40,7 +65,8 @@ jobs:
   # approve_prod:
   #   needs:
   #     - spsh-staging-schulportal
-  # environment: approve_prod
+  #   if:  inputs.target_instances == 'spsh-prod-schulportal' || inputs.target_instances == 'prod' || inputs.target_instances == 'all'
+  #   environment: approve_prod
   #   runs-on: ubuntu-latest
   #   steps:
   #     - run: echo "Version ${{ github.event.inputs.release_tag }}"
