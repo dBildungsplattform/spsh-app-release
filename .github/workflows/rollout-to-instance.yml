@@ -63,8 +63,6 @@ jobs:
       RC_WEBHOOK:  ${{ secrets.RC_WEBHOOK }} 
 
   approve_prod:
-    needs:
-      - spsh-staging-schulportal
     if:  inputs.target_instances == 'spsh-prod-schulportal' || inputs.target_instances == 'prod' || inputs.target_instances == 'all'
     environment: approve_prod
     runs-on: ubuntu-latest
