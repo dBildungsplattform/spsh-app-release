@@ -16,6 +16,11 @@ on:
       release_tag:
         type: string
         required: true
+      dbseeding:
+        required: false
+        description: "Enable Seeding (true, false, chart_value)"
+        default: chart_value
+        type: string
     secrets:
       TOKEN:
         required: true
@@ -112,6 +117,7 @@ jobs:
             --version ${{ inputs.release_tag }} \
             --values ./config/helm-charts/${{ inputs.instance_stage }}/general/values.yml \
             --values ./config/helm-charts/${{ inputs.instance_stage }}/dbildungs-iam-server/values.yml \
+            ${{ inputs.dbseeding != 'chart_value' && format('--set backend.dbseeding.enabled={0}', inputs.dbseeding) || '' }} \
             --wait
 
       - name: Send Notification to Rocket Chat

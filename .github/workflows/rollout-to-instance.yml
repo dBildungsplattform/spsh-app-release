@@ -12,6 +12,11 @@ on:
         description: "Decide where to do the rollout. Choose a Stage, a single instance or everywhere with 'all'. Default: all"
         required: true
         default: all
+      dbseeding:
+        required: false
+        description: "Enable Seeding (true, false, chart_value)"
+        default: chart_value
+        type: string
 
 jobs:
   approve_infra:
@@ -33,6 +38,7 @@ jobs:
       instance_stage: infra
       frontend_hostname: "spsh.spshinfra.spsh.dbildungsplattform.de"
       release_tag: ${{ inputs.release_tag }}
+      dbseeding: ${{ inputs.dbseeding }}
     secrets:
       token: ${{ secrets.GITHUB_TOKEN }}
       KUBECONFIG: ${{ secrets.SPSH_INFRA_KUBECONFIG }}
@@ -57,6 +63,7 @@ jobs:
       instance_stage: staging
       frontend_hostname: "spsh.staging.spsh.dbildungsplattform.de"
       release_tag: ${{ inputs.release_tag }}
+      dbseeding:  ${{ inputs.dbseeding }}
     secrets:
       token: ${{ secrets.GITHUB_TOKEN }}
       KUBECONFIG: ${{ secrets.SPSH_STAGING_KUBECONFIG }}
