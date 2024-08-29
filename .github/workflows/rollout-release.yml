@@ -45,8 +45,8 @@ jobs:
         with:
           repository: 'dBildungsplattform/spsh-app-release'
           # change this ref to a branch to test changes
-          # ref: "${{ inputs.release_tag }}"
-          ref: "DBP-961-rolout-0.0.10"
+          ref: "${{ inputs.release_tag }}"
+          # ref: ""
 
       - name: Install kubectl and Helm
         uses: azure/setup-kubectl@3e0aec4d80787158d308d7b364cb1b702e7feb7f #v4.0.0
