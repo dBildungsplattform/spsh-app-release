@@ -16,6 +16,11 @@ on:
       release_tag:
         type: string
         required: true
+      dbseeding:
+        required: false
+        description: "Enable Seeding (true, false, chart_value)"
+        default: chart_value
+        type: string
     secrets:
       TOKEN:
         required: true
@@ -40,8 +45,8 @@ jobs:
         with:
           repository: 'dBildungsplattform/spsh-app-release'
           # change this ref to a branch to test changes
-          ref: "${{ inputs.release_tag }}"
-          # ref: "<branch_name>"
+          # ref: "${{ inputs.release_tag }}"
+          ref: "DBP-961-rolout-0.0.10"
 
       - name: Install kubectl and Helm
         uses: azure/setup-kubectl@3e0aec4d80787158d308d7b364cb1b702e7feb7f #v4.0.0
@@ -112,6 +117,7 @@ jobs:
             --version ${{ inputs.release_tag }} \
             --values ./config/helm-charts/${{ inputs.instance_stage }}/general/values.yml \
             --values ./config/helm-charts/${{ inputs.instance_stage }}/dbildungs-iam-server/values.yml \
+            ${{ inputs.dbseeding != 'chart_value' && format('--set backend.dbseeding.enabled={0}', inputs.dbseeding) || '' }} \
             --wait
 
       - name: Send Notification to Rocket Chat
