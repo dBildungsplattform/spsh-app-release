@@ -12,7 +12,7 @@ service:
   # later add the servicecenter ips so the prometheus blackbox exporter has access
   # SourceRangesRestriction: true
   SourceRangesRestriction: false
-  enableLdapPort: false
+  enableLdapPort: true
 
 existingSecret: 
   name: dbildungs-iam-ldap
