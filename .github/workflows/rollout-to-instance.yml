@@ -89,7 +89,7 @@ jobs:
         instance_name: spsh-prod-schulportal
         instance_stage: prod
         frontend_hostname: "spsh.dbildungsplattform.de"
-        release_tag: ${ inputs.release_tag }}
+        release_tag: ${{ inputs.release_tag }}
       secrets:
         token: ${{ secrets.GITHUB_TOKEN }}
         KUBECONFIG: ${{ secrets.SPSH_PROD_KUBECONFIG }}
